@@ -1,4 +1,6 @@
 # 579-NLP-RAG
+## Installation
+```pip install -r requirements.txt```
 
 ### Command Line
 
