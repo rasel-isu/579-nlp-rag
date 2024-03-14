@@ -2,7 +2,8 @@ import os
 import weaviate
 from llama_index.core.node_parser import SentenceWindowNodeParser
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, \
-    StorageContext, load_index_from_storage
+    StorageContext
+from llama_index.core.indices.loading import load_index_from_storage
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.settings import Settings
@@ -16,7 +17,7 @@ class Indexing:
         # model = 'BAAI/bge-m3'
         # model = 'Salesforce/SFR-Embedding-Mistral'
         # model = 'BAAI/bge-m3'
-        model = 'sentence-transformers/all-MiniLM-L6-v2'
+        model = 'BAAI/bge-small-en-v1.5'
         Settings.llm =HuggingFaceLLM(
             generate_kwargs={"temperature": 0.1, "do_sample": False},
             tokenizer_name=model,
@@ -50,8 +51,10 @@ class Indexing:
         return nodes
     
     def get_index(self):
+        
         client = weaviate.Client(
-            embedded_options=weaviate.embedded.EmbeddedOptions(),
+            embedded_options=weaviate.embedded.EmbeddedOptions()
+            
         )
         vector_store = WeaviateVectorStore(
             weaviate_client = client,
@@ -65,14 +68,22 @@ class Indexing:
             nodes,
             storage_context = storage_context,
         )
-        return index
+        return index, nodes
     
-    def save_index(self):
-        index = self.get_index()
-        index.storage_context.persist(DIR_INDEX)
+    # def save_index(self):
+    #     index = self.get_index()
+    #     index.storage_context.persist(DIR_INDEX)
 
-    def load_index(self, dir):
-        storage_context = StorageContext.from_defaults(persist_dir=dir)
-        index = load_index_from_storage(storage_context)
+    def load_index(self):
+        client = weaviate.Client(
+            embedded_options=weaviate.embedded.EmbeddedOptions(),
+        )
+        vector_store = WeaviateVectorStore(
+            weaviate_client = client,
+            index_name = INDEX_NAME
+        )
+        storage_context = StorageContext.from_defaults(vector_store=vector_store)
+        index = VectorStoreIndex.from_vector_store(
+            vector_store, storage_context=storage_context)
         return index
         

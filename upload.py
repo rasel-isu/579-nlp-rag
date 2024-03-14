@@ -2,8 +2,9 @@ import argparse
 import shutil
 import os
 
-from config import DIR_PDF
+from config import DIR_PDF, DIR_INDEX
 from rag.indexing import Indexing
+from rag.retrieval import Retriever
 
 def add_pdf_to_folder(pdf_file, folder):
     if pdf_file.lower().endswith('.pdf'):
@@ -36,11 +37,9 @@ def main():
     is_added = add_pdf_to_folder(pdf_file, folder)
     if is_added:
         indexing = Indexing()
-        indexing.save_index()
-        index = indexing.load_index()
-        new_query_engine = index.as_query_engine()
-        response = new_query_engine.query("What is t5?")
-        print(response)
+        index, nodes = indexing.get_index()
+        response = Retriever(index, nodes).get_response("What is t5?")
+        print(f"\n\n\nResponse : {response}\n\n\n")
 
 
 if __name__ == "__main__":
