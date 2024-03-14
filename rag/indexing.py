@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv,find_dotenv
 import weaviate
 from llama_index.core.node_parser import SentenceWindowNodeParser
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, \
@@ -8,23 +9,29 @@ from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.settings import Settings
 from llama_index.llms.huggingface import HuggingFaceLLM
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.llms.openai import OpenAI
 from config import DIR_INDEX, DIR_PDF, INDEX_NAME
 
+
+load_dotenv(find_dotenv()) 
 
 class Indexing:
 
     def __init__(self) -> None:
-        # model = 'BAAI/bge-m3'
+       # model = 'BAAI/bge-m3'
         # model = 'Salesforce/SFR-Embedding-Mistral'
         # model = 'BAAI/bge-m3'
-        model = 'BAAI/bge-small-en-v1.5'
-        Settings.llm =HuggingFaceLLM(
-            generate_kwargs={"temperature": 0.1, "do_sample": False},
-            tokenizer_name=model,
-            model_name=model,
-            device_map="cpu",
-        )
-        Settings.embed_model =  HuggingFaceEmbedding(model_name=model)
+        # model = 'sentence-transformers/all-MiniLM-L6-v2'
+        # Settings.llm =HuggingFaceLLM(
+        #     generate_kwargs={"temperature": 0.1, "do_sample": False},
+        #     tokenizer_name=model,
+        #     model_name=model,
+        #     device_map="cpu",
+        # )
+        # Settings.embed_model =  HuggingFaceEmbedding(model_name=model)
+        Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0.1)
+        Settings.embed_model = OpenAIEmbedding()
 
     def get_all_pdf(self):
         files = []

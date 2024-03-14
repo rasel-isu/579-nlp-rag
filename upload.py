@@ -10,7 +10,7 @@ def add_pdf_to_folder(pdf_file, folder):
     if pdf_file.lower().endswith('.pdf'):
         try:
             shutil.copy(pdf_file, folder)
-            print(f"Added {pdf_file} to {folder}")
+            print(f"Added {pdf_file} to {folder} directory\n")
             return True
         except FileNotFoundError:
             print(f'There is no file named {pdf_file}')
