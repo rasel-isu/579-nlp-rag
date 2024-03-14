@@ -39,7 +39,7 @@ def main():
         indexing.save_index()
         index = indexing.load_index()
         new_query_engine = index.as_query_engine()
-        response = new_query_engine.query("who is this text about?")
+        response = new_query_engine.query("What is t5?")
         print(response)
 
 
