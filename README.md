@@ -53,7 +53,7 @@
         )
   ```
 - Generate:
-- 
+
     ```response = Retriever(index, nodes).get_response("What is t5?")```
 
 
