@@ -1,6 +1,7 @@
 import os
 
 import tiktoken
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv,find_dotenv
 import weaviate
 from llama_index.core.node_parser import SentenceWindowNodeParser, SentenceSplitter
@@ -18,7 +19,22 @@ from config import DIR_INDEX, DIR_PDF, INDEX_NAME
 
 load_dotenv(find_dotenv()) 
 
+class TextCleaner:
 
+    def __init__(self, text):
+        self.text = text
+
+    def remove_page_number_from_pdf(self):
+        pass
+
+    def remove_html_tags(self):
+        soup = BeautifulSoup(self.text, 'html.parser')
+        clean_text = soup.get_text()
+        return clean_text
+
+    def clean(self):
+        text =  self.remove_html_tags()
+        return text
 class Indexing:
 
     def __init__(self) -> None:
@@ -32,7 +48,19 @@ class Indexing:
        Settings.llm = OpenAI(model=self.model_name, temperature=0.1)
        Settings.embed_model = OpenAIEmbedding()
 
+    def load_documents(self):
+        files = self.get_all_pdf()
+        reader = SimpleDirectoryReader(
+            input_files=files
+        )
 
+        documents = []
+        for docs in reader.iter_data():
+            for doc in docs:
+                clean_text = TextCleaner(doc.text).clean()
+                doc.text = clean_text
+                documents.append(doc)
+        return documents
 
     def get_all_pdf(self):
         files = []
