@@ -12,11 +12,11 @@ class Retriever:
         # link: https://huggingface.co/BAAI/bge-reranker-base
         self.model_reranker = "BAAI/bge-reranker-base"
         # model_reranker = model
-        self.rerank = SentenceTransformerRerank(top_n = 2, model = self.model_reranker)
+        self.rerank = SentenceTransformerRerank(top_n = 5, model = self.model_reranker)
 
     def get_response(self, query):
         query_engine = self.index.as_query_engine(
-            similarity_top_k = 6,
+            similarity_top_k = 5,
             vector_store_query_mode="hybrid",
             alpha=0.5,
             node_postprocessors = [self.postproc, self.rerank],
