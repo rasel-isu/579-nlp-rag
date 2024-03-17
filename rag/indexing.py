@@ -1,7 +1,9 @@
 import os
+
+import tiktoken
 from dotenv import load_dotenv,find_dotenv
 import weaviate
-from llama_index.core.node_parser import SentenceWindowNodeParser
+from llama_index.core.node_parser import SentenceWindowNodeParser, SentenceSplitter
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, \
     StorageContext
 from llama_index.core.indices.loading import load_index_from_storage
@@ -16,22 +18,21 @@ from config import DIR_INDEX, DIR_PDF, INDEX_NAME
 
 load_dotenv(find_dotenv()) 
 
+
 class Indexing:
 
     def __init__(self) -> None:
-       # model = 'BAAI/bge-m3'
-        # model = 'Salesforce/SFR-Embedding-Mistral'
-        # model = 'BAAI/bge-m3'
-        # model = 'sentence-transformers/all-MiniLM-L6-v2'
-        # Settings.llm =HuggingFaceLLM(
-        #     generate_kwargs={"temperature": 0.1, "do_sample": False},
-        #     tokenizer_name=model,
-        #     model_name=model,
-        #     device_map="cpu",
-        # )
-        # Settings.embed_model =  HuggingFaceEmbedding(model_name=model)
-        Settings.llm = OpenAI(model="gpt-3.5-turbo", temperature=0.1)
-        Settings.embed_model = OpenAIEmbedding()
+       self.model_name = "gpt-3.5-turbo"
+       Settings.text_splitter = SentenceSplitter(
+           separator=" ", chunk_size=200, chunk_overlap=50,
+           paragraph_separator="\n\n\n",
+           secondary_chunking_regex="[^,.;。]+[,.;。]?",
+           tokenizer=tiktoken.encoding_for_model(self.model_name).encode
+       )
+       Settings.llm = OpenAI(model=self.model_name, temperature=0.1)
+       Settings.embed_model = OpenAIEmbedding()
+
+
 
     def get_all_pdf(self):
         files = []
