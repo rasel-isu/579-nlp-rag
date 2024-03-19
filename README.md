@@ -18,6 +18,12 @@
 
 [Video](www.google.com)
 
+
+### Export data from vectorDB
+```self.save_data_from_index_to_file(client)```  
+
+**File** : *index_data.json*
+
 ## Steps in Code
 - Upload/Add PDF to RAG
 

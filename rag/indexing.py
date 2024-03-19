@@ -1,5 +1,5 @@
 import os
-
+import json
 import tiktoken
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv,find_dotenv
@@ -86,6 +86,15 @@ class Indexing:
         nodes = node_parser.get_nodes_from_documents(documents)
         return nodes
     
+    def save_data_from_index_to_file(client):
+
+        response = client.data_object.get(
+            class_name=INDEX_NAME,
+            with_vector=True)
+
+        with open("index_data.json","w") as f:
+            json.dump(response, f, indent=2)
+
     def get_index(self):
         
         client = weaviate.Client(
@@ -104,6 +113,9 @@ class Indexing:
             nodes,
             storage_context = storage_context,
         )
+        
+        self.save_data_from_index_to_file(client)
+        
         return index, nodes
     
     # def save_index(self):
