@@ -86,7 +86,7 @@ class Indexing:
         nodes = node_parser.get_nodes_from_documents(documents)
         return nodes
     
-    def save_data_from_index_to_file(client):
+    def save_data_from_index_to_file(self, client):
 
         response = client.data_object.get(
             class_name=INDEX_NAME,
@@ -115,7 +115,7 @@ class Indexing:
         )
         
         self.save_data_from_index_to_file(client)
-        
+
         return index, nodes
     
     # def save_index(self):
