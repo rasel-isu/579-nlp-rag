@@ -8,7 +8,7 @@
 
 ```python upload.py --pdf_file=example.pdf```
 
- [Video](www.google.com)
+ [Video](https://youtu.be/z_Xjxqk8E4g)
 
 #### Ask your question to the RAG
 
