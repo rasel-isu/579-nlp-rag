@@ -1,6 +1,9 @@
-# 579-NLP-RAG
+# Retrieval-augmented generation (RAG)
 ## Installation
 ```pip install -r requirements.txt```
+
+#### Create a .env file in the root folder, put the line below and replace YOUR_API_KER with your openai api key
+```OPENAI_API_KEY=YOUR_API_KER```
 
 ### Command Line
 
