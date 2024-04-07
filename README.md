@@ -1,5 +1,7 @@
 # Retrieval-augmented generation (RAG)
 ## Installation
+```python3 -m pip install --upgrade pip```
+
 Linux
 
 ```pip install -r requirements.txt```
