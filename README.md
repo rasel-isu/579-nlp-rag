@@ -1,5 +1,8 @@
 # Retrieval-augmented generation (RAG)
 ## Installation
+[_**Important Note : Don't run on Windows because it does not supported with Embedded DB**_
+](https://github.com/weaviate/weaviate/issues/3315)
+
 Linux
 
 ```pip install -r requirements.txt```
