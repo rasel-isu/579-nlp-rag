@@ -1,5 +1,6 @@
 # project files
-pdf_file/
+pdf_file
+.DS_Store
 .vscode/
 .env
 .idea/
