@@ -1,7 +1,9 @@
 # Retrieval-augmented generation (RAG)
 ## Installation
-[_**Important Note : Don't run on Windows because it does not supported with Embedded DB**_
+[_**Important Note : Don't run on Windows because it does not supported with Embedded DB!**_
 ](https://github.com/weaviate/weaviate/issues/3315)
+
+```python3 -m pip install --upgrade pip```
 
 Linux
 
