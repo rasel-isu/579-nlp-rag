@@ -1,28 +1,9 @@
-import argparse
-import shutil
 import os
 
-from config import DIR_PDF, DIR_INDEX
+from config import DIR_PDF
 from rag.indexing import Indexing
 from rag.retrieval import Retriever
-
-def add_pdf_to_folder(pdf_file, folder):
-    if pdf_file.lower().endswith('.pdf'):
-        try:
-            shutil.copy(pdf_file, folder)
-            print(f"Added {pdf_file} to {folder} directory\n")
-            return True
-        except FileNotFoundError:
-            print(f'There is no file named {pdf_file}')
-    else:
-        print(f"{pdf_file} is not a PDF file")
-
-def load_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--pdf_file',
-                         help="PDF file to add to the folder")
-    args = parser.parse_args()
-    return args
+from utils import add_pdf_to_folder, load_arguments
 
 
 def main():
