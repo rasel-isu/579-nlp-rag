@@ -20,13 +20,13 @@ Mac
 
 #### How to upload PDF?
 
-```python upload.py --pdf_file=example.pdf```
+```python upload.py --pdf_file=mt5.pdf```
 
  [Video](https://youtu.be/z_Xjxqk8E4g)
 
 #### Ask your question to the RAG
 
-```python query.py --question="What is the meaning of life?"```
+```python query.py --question=""What is mt5?"```
 
 ### GUI
 
