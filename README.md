@@ -28,6 +28,7 @@ Mac
 
 ```python query.py --question="What is mt5?"```
 
+<a href="https://youtu.be/H8mwEB64cJ0" target="_blank">Video!</a>
 ### GUI
 
 <a href="" target="_blank">Video!</a>
