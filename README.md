@@ -3,15 +3,16 @@
 [_**Important Note : Don't run on Windows because it does not supported with Embedded DB!**_
 ](https://github.com/weaviate/weaviate/issues/3315)
 
-```python3 -m pip install --upgrade pip```
 
 Linux
 
-```pip install -r requirements.txt```
+```pip3 install -r requirements.txt```
 
 Mac
 
-```pip install -r requirements_mac.txt```
+```python3 -m pip install --upgrade pip```
+
+```pip3 install -r requirements_mac.txt```
 
 #### Create a .env file in the root folder, put the line below and replace YOUR_API_KER with your openai api key
 ```OPENAI_API_KEY=YOUR_API_KER```
@@ -22,15 +23,14 @@ Mac
 
 ```python upload.py --pdf_file=mt5.pdf```
 
- [Video](https://youtu.be/z_Xjxqk8E4g)
-
+<a href="https://youtu.be/z_Xjxqk8E4g" target="_blank">Video!</a>
 #### Ask your question to the RAG
 
-```python query.py --question=""What is mt5?"```
+```python query.py --question="What is mt5?"```
 
 ### GUI
 
-[Video](www.google.com)
+<a href="" target="_blank">Video!</a>
 
 
 ### Export data from vectorDB
