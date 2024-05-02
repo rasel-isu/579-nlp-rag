@@ -6,7 +6,7 @@ from dotenv import load_dotenv,find_dotenv
 import weaviate
 from llama_index.core.node_parser import SentenceWindowNodeParser, SentenceSplitter
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, \
-    StorageContext
+    StorageContext, Document
 from llama_index.core.indices.loading import load_index_from_storage
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
@@ -17,7 +17,7 @@ from llama_index.llms.openai import OpenAI
 from config import DIR_INDEX, DIR_PDF, INDEX_NAME
 
 
-load_dotenv(find_dotenv()) 
+# load_dotenv(find_dotenv())
 
 class TextCleaner:
 
@@ -37,7 +37,8 @@ class TextCleaner:
         return text
 class Indexing:
 
-    def __init__(self) -> None:
+    def __init__(self, texts=[]) -> None:
+       self.texts = texts
        self.model_name = "gpt-3.5-turbo"
        Settings.text_splitter = SentenceSplitter(
            separator=" ", chunk_size=200, chunk_overlap=50,
@@ -49,17 +50,21 @@ class Indexing:
        Settings.embed_model = OpenAIEmbedding()
 
     def load_documents(self):
-        files = self.get_all_pdf()
-        reader = SimpleDirectoryReader(
-            input_files=files
-        )
-
         documents = []
-        for docs in reader.iter_data():
-            for doc in docs:
-                clean_text = TextCleaner(doc.text).clean()
-                doc.text = clean_text
-                documents.append(doc)
+        if self.texts:
+            for doc in self.texts:
+                clean_text = TextCleaner(doc).clean()
+                documents.append(Document(text=clean_text))
+        else:
+            files = self.get_all_pdf()
+            reader = SimpleDirectoryReader(
+                input_files=files
+            )
+            for docs in reader.iter_data():
+                for doc in docs:
+                    clean_text = TextCleaner(doc.text).clean()
+                    doc.text = clean_text
+                    documents.append(doc)
         return documents
 
     def get_all_pdf(self):
@@ -68,14 +73,6 @@ class Indexing:
         for i in os.listdir(DIR_PDF):
             files.append(f'{DIR_PDF}/{i}')
         return files
-
-
-    def load_documents(self):
-        files = self.get_all_pdf()
-        documents = SimpleDirectoryReader(
-                input_files=files
-        ).load_data()
-        return documents
     
     def get_nodes(self):
         documents = self.load_documents()
