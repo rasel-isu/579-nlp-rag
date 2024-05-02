@@ -21,3 +21,4 @@ llamaindex-py-client==0.1.13
 python-dotenv==1.0.1
 tiktoken==0.6.0
 weaviate-client==3.26.2
+funix==0.3.4
