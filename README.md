@@ -7,7 +7,7 @@ http://138.2.71.205:3000/
 
 ### localhost : http://0.0.0.0:3000/
 
-<a href="" target="_blank">Video!</a>
+<a href="https://youtu.be/lmzuVHEJJVM" target="_blank">Video!</a>
 
 ## Install locally
 [_**Important Note : Don't run on Windows because it does not supported with Embedded DB!**_
@@ -41,7 +41,7 @@ Mac
 <a href="https://youtu.be/H8mwEB64cJ0" target="_blank">Video!</a>
 ### GUI
 
-<a href="" target="_blank">Video!</a>
+<a href="https://youtu.be/lmzuVHEJJVM" target="_blank">Video!</a>
 
 
 ### Export data from vectorDB
